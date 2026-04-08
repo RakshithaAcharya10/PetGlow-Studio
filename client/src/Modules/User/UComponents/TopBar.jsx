@@ -60,8 +60,6 @@ function TopBar() {
     <AppBar position="static" sx={{ backgroundColor: "#1e3a5f" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          {/* <StoreIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <img
             src={logo}
             alt="logo"
@@ -124,7 +122,6 @@ function TopBar() {
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <StoreIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -148,7 +145,7 @@ function TopBar() {
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex' },
-              justifyContent: "flex-end"   // 🔥 pushes menu to right
+              justifyContent: "flex-end"   
             }}
           >
             {pages.map((page) => (
@@ -166,7 +163,7 @@ function TopBar() {
                   my: 2,
                   color: 'white',
                   display: 'block',
-                  mx: 2   // 🔥 spacing between menu items
+                  mx: 2  
                 }}
               >
                 {page.name}
