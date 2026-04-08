@@ -1,0 +1,76 @@
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Rating from '@mui/material/Rating';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { Button } from '@mui/material';
+
+export default function ViewUser() {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/user/getuser')
+      .then((res) => {
+        console.log(res.data.allusers)
+        setUsers(res.data.allusers)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+  }, [])
+
+  const HandleDelete = (uid) => {
+    axios.delete(`http://localhost:8000/user/deleteuser/${uid}`)
+      .then((res) => {
+        console.log(res)
+        alert("user deleted")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow sx={{ '& th': { color: 'red', fontWeight: 'bold' } }}>
+            <TableCell align="left">Serial NO.</TableCell>
+            <TableCell align="left">NAME</TableCell>
+            <TableCell align="left">EMAIL</TableCell>
+            <TableCell align="left">PHONE</TableCell>
+            <TableCell align="left">ADRESS</TableCell>
+            <TableCell align="left">ACTION</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((row, index) => (
+            <TableRow
+              key={row._id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row" align='left'>
+                {index + 1}
+              </TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.email}</TableCell>
+              <TableCell align="left">{row.phone}</TableCell>
+              <TableCell align="left">{row.address}</TableCell>
+              <TableCell align="left">
+                <Button variant='contained'>UPDATE</Button>
+                <Button variant='outlined' onClick={() => HandleDelete(row._id)}>DELETE</Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+  );
+}
